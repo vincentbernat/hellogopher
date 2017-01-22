@@ -53,7 +53,7 @@ $(BIN)/go2xunit: | $(BASE) ; $(info $(M) building go2xunit…)
 # Tests
 
 TEST_TARGETS := test-default test-bench test-short test-verbose test-race
-.PHONY: $(TEST_TARGETS) test tests
+.PHONY: $(TEST_TARGETS) test-xml test tests
 test-bench:   ARGS=-run=__absolutelynothing__ -bench=. ## Run benchmarks
 test-short:   ARGS=-short        ## Run only short tests
 test-verbose: ARGS=-v            ## Run tests in verbose mode with coverage reporting
