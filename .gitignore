@@ -1,0 +1,5 @@
+/bin/
+/.gopath~/
+/vendor/
+/test/tests.*
+/test/coverage.*
