@@ -103,7 +103,7 @@ fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
 # Dependency management
 
 .PHONY: deps deps-update
-deps: vendor | $(BASE)		## Fetch dependencies
+deps: vendor			## Fetch dependencies
 deps-update: | $(BASE)		## Update dependencies
 	$Q cd $(BASE) && $(GLIDE) update
 vendor: glide.yaml glide.lock | $(BASE) ; $(info $(M) retrieving dependencies…)
