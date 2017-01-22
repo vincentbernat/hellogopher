@@ -61,7 +61,7 @@ test-race:    ARGS=-race         ## Run tests with race detector
 $(TEST_TARGETS): NAME=$(MAKECMDGOALS:test-%=%)
 $(TEST_TARGETS): test
 test tests: fmt lint deps | $(BASE) ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests
-	$Q cd $(BASE) && $(GO) test -timeout 20s $(ARGS) $(TESTPKGS)
+	$Q cd $(BASE) && $(GO) test -timeout $(TIMEOUT)s $(ARGS) $(TESTPKGS)
 
 test-xml: fmt lint deps | $(BASE) $(GO2XUNIT) ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests with xUnit output
 	$Q cd $(BASE) && 2>&1 $(GO) test -timeout 20s -v $(TESTPKGS) | tee test/tests.output
