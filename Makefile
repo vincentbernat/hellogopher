@@ -102,11 +102,6 @@ fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
 
 # Dependency management
 
-.PHONY: deps-update
-deps-update:
-	@touch glide.yaml
-	@$(MAKE) glide.lock
-
 glide.lock: glide.yaml | $(BASE) ; $(info $(M) updating dependencies…)
 	$Q cd $(BASE) && $(GLIDE) update
 	@touch $@

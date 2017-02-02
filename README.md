@@ -39,8 +39,7 @@ The following commands are available:
    `coverage.xml` and `profile.out` in `test/coverage.*/`.
  - `make test PKG=helloworld/hello` to restrict test to a package
  - `make clean`
- - `make deps` to retrieve dependencies
- - `make deps-update` to update dependencies (will modify `glide.lock`)
+ - `make vendor` to retrieve dependencies
  - `make lint` to run golint
  - `make fmt` to run gofmt
 
