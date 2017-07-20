@@ -11,7 +11,6 @@ TESTPKGS = $(shell env GOPATH=$(GOPATH) $(GO) list -f '{{ if or .TestGoFiles .XT
 GO      = go
 GODOC   = godoc
 GOFMT   = gofmt
-GLIDE   = glide
 TIMEOUT = 15
 V = 0
 Q = $(if $(filter 1,$V),,@)
@@ -29,6 +28,10 @@ $(BASE): ; $(info $(M) setting GOPATH…)
 	@ln -sf $(CURDIR) $@
 
 # Tools
+
+GODEP = $(BIN)/dep
+$(BIN)/dep: | $(BASE) ; $(info $(M) building go dep…)
+	$Q go get github.com/golang/dep/cmd/dep
 
 GOLINT = $(BIN)/golint
 $(BIN)/golint: | $(BASE) ; $(info $(M) building golint…)
@@ -102,13 +105,21 @@ fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
 
 # Dependency management
 
-glide.lock: glide.yaml | $(BASE) ; $(info $(M) updating dependencies…)
-	$Q cd $(BASE) && $(GLIDE) update
-	@touch $@
-vendor: glide.lock | $(BASE) ; $(info $(M) retrieving dependencies…)
-	$Q cd $(BASE) && $(GLIDE) --quiet install
+vendor: Gopkg.toml Gopkg.lock | $(BASE) $(GODEP) ; $(info $(M) retrieving dependencies…)
+	$Q cd $(BASE) && $(GODEP) ensure
 	@ln -nsf . vendor/src
 	@touch $@
+.PHONY: vendor-update
+vendor-update: | $(BASE) $(GODEP)
+ifeq "$(origin PKG)" "command line"
+	$(info $(M) updating $(PKG) dependency…)
+	$Q cd $(BASE) && $(GODEP) ensure -update $(PKG)
+else
+	$(info $(M) updating all dependencies…)
+	$Q cd $(BASE) && $(GODEP) ensure -update
+endif
+	@ln -nsf . vendor/src
+	@touch vendor
 
 # Misc
 

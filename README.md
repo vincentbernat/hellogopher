@@ -17,9 +17,7 @@ basic to stay easy to understand.
 ## Vendoring
 
 This example relies on vendoring for all dependencies. It
-uses [Glide](https://glide.sh) for this purpose. It is expected to be
-already installed (but look at how other tools are installed, it's
-easy to do the same thing for Glide).
+uses [go dep](https://github.com/golang/dep) for this purpose.
 
 ## Versioning
 
