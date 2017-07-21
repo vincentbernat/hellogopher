@@ -21,6 +21,10 @@ uses [Glide](https://glide.sh) for this purpose. It is expected to be
 already installed (but look at how other tools are installed, it's
 easy to do the same thing for Glide).
 
+*Glide* is being phased out by `go dep`. Look at
+the [master](https://github.com/vincentbernat/hellogopher) branch for
+the same example with `go dep`.
+
 ## Versioning
 
 Version is extracted from git tags using anything prefixed by `v`.
