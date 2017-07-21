@@ -1,0 +1,3 @@
+[[constraint]]
+  name = "github.com/spf13/cobra"
+  branch = "master"
