@@ -29,32 +29,28 @@ $(BASE): ; $(info $(M) setting GOPATH…)
 
 # Tools
 
+$(BIN)/%: | $(BASE) ; $(info $(M) building $(REPOSITORY)…)
+	$Q tmp=$$(mktemp -d); \
+		(GOPATH=$$tmp go get $(REPOSITORY) && cp $$tmp/bin/* $(BIN)/.) || ret=$$?; \
+		rm -rf $$tmp ; exit $$ret
+
 GODEP = $(BIN)/dep
-GODEPVERSION = 0.3.1
-$(BIN)/dep: | $(BASE) ; $(info $(M) building go dep…)
-	$Q go get -d github.com/golang/dep/cmd/dep
-	$Q cd $(GOPATH)/src/github.com/golang/dep ; git checkout -q v$(GODEPVERSION)
-	$Q go get github.com/golang/dep/cmd/dep
+$(BIN)/dep: REPOSITORY=github.com/golang/dep/cmd/dep
 
 GOLINT = $(BIN)/golint
-$(BIN)/golint: | $(BASE) ; $(info $(M) building golint…)
-	$Q go get github.com/golang/lint/golint
+$(BIN)/golint: REPOSITORY=github.com/golang/lint/golint
 
 GOCOVMERGE = $(BIN)/gocovmerge
-$(BIN)/gocovmerge: | $(BASE) ; $(info $(M) building gocovmerge…)
-	$Q go get github.com/wadey/gocovmerge
+$(BIN)/gocovmerge: REPOSITORY=github.com/wadey/gocovmerge
 
 GOCOV = $(BIN)/gocov
-$(BIN)/gocov: | $(BASE) ; $(info $(M) building gocov…)
-	$Q go get github.com/axw/gocov/...
+$(BIN)/gocov: REPOSITORY=github.com/axw/gocov/...
 
 GOCOVXML = $(BIN)/gocov-xml
-$(BIN)/gocov-xml: | $(BASE) ; $(info $(M) building gocov-xml…)
-	$Q go get github.com/AlekSi/gocov-xml
+$(BIN)/gocov-xml: REPOSITORY=github.com/AlekSi/gocov-xml
 
 GO2XUNIT = $(BIN)/go2xunit
-$(BIN)/go2xunit: | $(BASE) ; $(info $(M) building go2xunit…)
-	$Q go get github.com/tebeka/go2xunit
+$(BIN)/go2xunit: REPOSITORY=github.com/tebeka/go2xunit
 
 # Tests
 
