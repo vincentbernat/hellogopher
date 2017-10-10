@@ -30,7 +30,10 @@ $(BASE): ; $(info $(M) setting GOPATH…)
 # Tools
 
 GODEP = $(BIN)/dep
+GODEPVERSION = 0.3.1
 $(BIN)/dep: | $(BASE) ; $(info $(M) building go dep…)
+	$Q go get -d github.com/golang/dep/cmd/dep
+	$Q cd $(GOPATH)/src/github.com/golang/dep ; git checkout -q v$(GODEPVERSION)
 	$Q go get github.com/golang/dep/cmd/dep
 
 GOLINT = $(BIN)/golint
