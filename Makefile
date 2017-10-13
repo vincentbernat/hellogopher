@@ -29,7 +29,9 @@ $(BASE): ; $(info $(M) setting GOPATH…)
 
 # Tools
 
-$(BIN)/%: | $(BASE) ; $(info $(M) building $(REPOSITORY)…)
+$(BIN):
+	@mkdir -p $@
+$(BIN)/%: $(BIN) | $(BASE) ; $(info $(M) building $(REPOSITORY)…)
 	$Q tmp=$$(mktemp -d); \
 		(GOPATH=$$tmp go get $(REPOSITORY) && cp $$tmp/bin/* $(BIN)/.) || ret=$$?; \
 		rm -rf $$tmp ; exit $$ret
