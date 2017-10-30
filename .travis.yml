@@ -3,4 +3,6 @@ language: go
 go:
   - 1.x
   - master
-script: make tests all
+script:
+  - make tests
+  - make && ./bin/hellogopher hello
