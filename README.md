@@ -52,3 +52,8 @@ already-installed one by specifying their full path this way instead:
     make lint GOLINT=/usr/bin/golint
 
 Files other than `.gitignore` and `Makefile` are just examples.
+
+## License
+
+This `Makefile` is published under the CC0 1.0 license. See `LICENSE`
+for more details.
