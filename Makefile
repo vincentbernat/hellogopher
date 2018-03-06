@@ -96,9 +96,7 @@ test-coverage: fmt lint vendor test-coverage-tools | $(BASE) ; $(info $(M) runni
 
 .PHONY: lint
 lint: vendor | $(BASE) $(GOLINT) ; $(info $(M) running golint…) @ ## Run golint
-	$Q cd $(BASE) && ret=0 && for pkg in $(PKGS); do \
-		test -z "$$($(GOLINT) $$pkg | tee /dev/stderr)" || ret=1 ; \
-	 done ; exit $$ret
+	$Q $(GOLINT) -set_exit_status $(PKGS)
 
 .PHONY: fmt
 fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
