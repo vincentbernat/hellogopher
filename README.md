@@ -5,7 +5,8 @@ similar to [Filippo Valsorda's hellogopher](https://github.com/cloudflare/hellog
 
 This is for people who don't know about `GOPATH` or who don't want to
 use it (like me). With such a `Makefile`, a project can be built
-whatever its location on the disk.
+whatever its location on the disk. Note however the use of symlinks is
+frowned upon by Go authors and some tools refuse to work with them.
 
 This is intended for *programs* only. For libraries, you should be
 able to use `go build`, `go install`, `go get` directly or you will
