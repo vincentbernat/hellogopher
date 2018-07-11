@@ -69,9 +69,11 @@ $(TEST_TARGETS): test
 check test tests: fmt lint vendor | $(BASE) ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests
 	$Q cd $(BASE) && $(GO) test -timeout $(TIMEOUT)s $(ARGS) $(TESTPKGS)
 
+test-xml: TEST_DIR := $(CURDIR)/test
 test-xml: fmt lint vendor | $(BASE) $(GO2XUNIT) ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests with xUnit output
-	$Q cd $(BASE) && 2>&1 $(GO) test -timeout 20s -v $(TESTPKGS) | tee test/tests.output
-	$(GO2XUNIT) -fail -input test/tests.output -output test/tests.xml
+	$Q mkdir -p $(TEST_DIR)
+	$Q cd $(BASE) && 2>&1 $(GO) test -timeout 20s -v $(TESTPKGS) | tee $(TEST_DIR)/tests.output
+	$Q $(GO2XUNIT) -fail -input $(TEST_DIR)/tests.output -output $(TEST_DIR)/tests.xml
 
 COVERAGE_MODE = atomic
 COVERAGE_PROFILE = $(COVERAGE_DIR)/profile.out
