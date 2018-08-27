@@ -18,7 +18,9 @@ basic to stay easy to understand.
 ## Dependencies
 
 This example relies on modules to retrieve dependencies. This require
-use of Go 1.11.
+use of Go 1.11. To update a dependency, just edit `go.mod`. If you
+don't want to set a specific version, delete the line: on the next
+`go` command, the latest version will be inserted automatically.
 
 ## Versioning
 
