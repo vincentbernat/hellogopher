@@ -15,10 +15,10 @@ make the life of your users difficult.
 Also, it is not intended to be an universal `Makefile`. It should stay
 basic to stay easy to understand.
 
-## Vendoring
+## Dependencies
 
-This example relies on vendoring for all dependencies. It
-uses [go dep](https://github.com/golang/dep) for this purpose.
+This example relies on modules to retrieve dependencies. This require
+use of Go 1.11.
 
 ## Versioning
 
@@ -38,7 +38,6 @@ The following commands are available:
    `coverage.xml` and `profile.out` in `test/coverage.*/`.
  - `make test PKG=helloworld/hello` to restrict test to a package
  - `make clean`
- - `make vendor` to retrieve dependencies
  - `make lint` to run golint
  - `make fmt` to run gofmt
 

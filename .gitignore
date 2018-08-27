@@ -1,5 +1,4 @@
 /bin/
-/.gopath~/
-/vendor/
 /test/tests.*
 /test/coverage.*
+/go.sum

@@ -1,5 +1,0 @@
-# Put here any constraint you want to enforce. For example:
-#
-# [[constraint]]
-#   name = "github.com/spf13/cobra"
-#   version = "v0.0.1"
