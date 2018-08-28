@@ -2,8 +2,8 @@ PACKAGE  = hellogopher
 DATE    ?= $(shell date +%FT%T%z)
 VERSION ?= $(shell git describe --tags --always --dirty --match=v* 2> /dev/null || \
 			cat $(CURDIR)/.version 2> /dev/null || echo v0)
-PKGS     = $(or $(PKG),$(shell $(GO) list ./...))
-TESTPKGS = $(shell $(GO) list -f '{{ if or .TestGoFiles .XTestGoFiles }}{{ .ImportPath }}{{ end }}' $(PKGS))
+PKGS     = $(or $(PKG),$(shell env GO111MODULE=on $(GO) list ./...))
+TESTPKGS = $(shell env GO111MODULE=on $(GO) list -f '{{ if or .TestGoFiles .XTestGoFiles }}{{ .ImportPath }}{{ end }}' $(PKGS))
 BIN      = $(CURDIR)/bin
 
 GO      = go
@@ -14,8 +14,7 @@ V = 0
 Q = $(if $(filter 1,$V),,@)
 M = $(shell printf "\033[34;1m▶\033[0m")
 
-GO111MODULE=on
-export GO111MODULE
+export GO111MODULE=on
 
 .PHONY: all
 all: fmt lint $(BIN) ; $(info $(M) building executable…) @ ## Build program binary
@@ -30,9 +29,9 @@ $(BIN):
 	@mkdir -p $@
 $(BIN)/%: | $(BIN) ; $(info $(M) building $(REPOSITORY)…)
 	$Q tmp=$$(mktemp -d); \
-		(env GO111MODULE=off GOCACHE=off GOPATH=$$tmp $(GO) get $(REPOSITORY) \
-			&& cp $$tmp/bin/* $(BIN)/.) || ret=$$?; \
-		rm -rf $$tmp ; exit $$ret
+	   env GO111MODULE=off GOCACHE=off GOPATH=$$tmp GOBIN=$(BIN) $(GO) get $(REPOSITORY) \
+		|| ret=$$?; \
+	   rm -rf $$tmp ; exit $$ret
 
 GOLINT = $(BIN)/golint
 $(BIN)/golint: REPOSITORY=github.com/golang/lint/golint
