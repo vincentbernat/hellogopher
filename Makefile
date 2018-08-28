@@ -30,7 +30,7 @@ $(BIN):
 	@mkdir -p $@
 $(BIN)/%: | $(BIN) ; $(info $(M) building $(REPOSITORY)…)
 	$Q tmp=$$(mktemp -d); \
-		(env GO111MODULE=off GOCACHE=off GOPATH=$$tmp go get $(REPOSITORY) \
+		(env GO111MODULE=off GOCACHE=off GOPATH=$$tmp $(GO) get $(REPOSITORY) \
 			&& cp $$tmp/bin/* $(BIN)/.) || ret=$$?; \
 		rm -rf $$tmp ; exit $$ret
 

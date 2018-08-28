@@ -22,6 +22,11 @@ use of Go 1.11. To update a dependency, just edit `go.mod`. If you
 don't want to set a specific version, delete the line: on the next
 `go` command, the latest version will be inserted automatically.
 
+For older versions of Go, it's possible to use `vgo` instead:
+
+    go get -u golang.org/x/vgo
+    make GO=$GOPATH/bin/vgo
+
 ## Versioning
 
 Version is extracted from git tags using anything prefixed by `v`.
