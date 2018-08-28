@@ -27,6 +27,8 @@ For older versions of Go, it's possible to use `vgo` instead:
     go get -u golang.org/x/vgo
     make GO=$GOPATH/bin/vgo
 
+On first build, you need to run `go mod init PROJECTNAME`.
+
 ## Versioning
 
 Version is extracted from git tags using anything prefixed by `v`.
