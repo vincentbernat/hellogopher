@@ -19,8 +19,8 @@ basic to stay easy to understand.
 
 This example relies on modules to retrieve dependencies. This require
 use of Go 1.11. To update a dependency, just edit `go.mod`. If you
-don't want to set a specific version, delete the line: on the next
-`go` command, the latest version will be inserted automatically.
+don't want to set a specific version, use `go get -u
+DEPENDENCY@REVISION`.
 
 For older versions of Go, it's possible to use `vgo` instead:
 
