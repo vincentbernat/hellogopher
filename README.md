@@ -3,17 +3,10 @@
 This is an example of `Makefile` to build a Go project. This is quite
 similar to [Filippo Valsorda's hellogopher](https://github.com/cloudflare/hellogopher).
 
-This is for people who don't know about `GOPATH` or who don't want to
-use it (like me). With such a `Makefile`, a project can be built
-whatever its location on the disk. Note however the use of symlinks is
-frowned upon by Go authors and some tools refuse to work with them.
-
-This is intended for *programs* only. For libraries, you should be
-able to use `go build`, `go install`, `go get` directly or you will
-make the life of your users difficult.
-
-Also, it is not intended to be an universal `Makefile`. It should stay
-basic to stay easy to understand.
+Initially, this is for people who don't know about `GOPATH` or who
+don't want to use it (like me). However, starting with Go 1.11,
+modules enable to work outside of `GOPATH` without any special
+environment. This turns this `Makefile` as only a convenience tool.
 
 ## Dependencies
 
