@@ -8,7 +8,6 @@ BIN      = $(CURDIR)/bin
 
 GO      = go
 GODOC   = godoc
-GOFMT   = gofmt
 TIMEOUT = 15
 V = 0
 Q = $(if $(filter 1,$V),,@)
@@ -93,9 +92,7 @@ lint: | $(GOLINT) ; $(info $(M) running golint…) @ ## Run golint
 
 .PHONY: fmt
 fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
-	@ret=0 && for d in $$($(GO) list -f '{{.Dir}}' ./...); do \
-		$(GOFMT) -l -w $$d/*.go || ret=$$? ; \
-	 done ; exit $$ret
+	$Q $(GO) fmt ./...
 
 # Misc
 
