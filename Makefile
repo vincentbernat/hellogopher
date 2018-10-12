@@ -33,7 +33,7 @@ $(BIN)/%: | $(BIN) ; $(info $(M) building $(REPOSITORY)…)
 	   rm -rf $$tmp ; exit $$ret
 
 GOLINT = $(BIN)/golint
-$(BIN)/golint: REPOSITORY=github.com/golang/lint/golint
+$(BIN)/golint: REPOSITORY=golang.org/x/lint/golint
 
 GOCOVMERGE = $(BIN)/gocovmerge
 $(BIN)/gocovmerge: REPOSITORY=github.com/wadey/gocovmerge
