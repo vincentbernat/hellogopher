@@ -7,7 +7,6 @@ TESTPKGS = $(shell env GO111MODULE=on $(GO) list -f '{{ if or .TestGoFiles .XTes
 BIN      = $(CURDIR)/bin
 
 GO      = go
-GODOC   = godoc
 TIMEOUT = 15
 V = 0
 Q = $(if $(filter 1,$V),,@)
