@@ -2,6 +2,7 @@
 language: go
 go:
   - 1.11
+  - 1.12
   - 1.x
   - master
 script:
