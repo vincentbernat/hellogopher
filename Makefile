@@ -1,4 +1,4 @@
-PACKAGE  = $(shell env GO111MODULE=on $(GO) list -m)
+MODULE   = $(shell env GO111MODULE=on $(GO) list -m)
 DATE    ?= $(shell date +%FT%T%z)
 VERSION ?= $(shell git describe --tags --always --dirty --match=v* 2> /dev/null || \
 			cat $(CURDIR)/.version 2> /dev/null || echo v0)
@@ -20,33 +20,33 @@ export GO111MODULE=on
 all: fmt lint | $(BIN) ; $(info $(M) building executable…) @ ## Build program binary
 	$Q $(GO) build \
 		-tags release \
-		-ldflags '-X $(PACKAGE)/cmd.Version=$(VERSION) -X $(PACKAGE)/cmd.BuildDate=$(DATE)' \
-		-o $(BIN)/$(PACKAGE) main.go
+		-ldflags '-X $(MODULE)/cmd.Version=$(VERSION) -X $(MODULE)/cmd.BuildDate=$(DATE)' \
+		-o $(BIN)/$(MODULE) main.go
 
 # Tools
 
 $(BIN):
 	@mkdir -p $@
-$(BIN)/%: | $(BIN) ; $(info $(M) building $(TOOL)…)
+$(BIN)/%: | $(BIN) ; $(info $(M) building $(PACKAGE)…)
 	$Q tmp=$$(mktemp -d); \
-	   env GO111MODULE=off GOPATH=$$tmp GOBIN=$(BIN) $(GO) get $(TOOL) \
+	   env GO111MODULE=off GOPATH=$$tmp GOBIN=$(BIN) $(GO) get $(PACKAGE) \
 		|| ret=$$?; \
 	   rm -rf $$tmp ; exit $$ret
 
 GOLINT = $(BIN)/golint
-$(BIN)/golint: TOOL=golang.org/x/lint/golint
+$(BIN)/golint: PACKAGE=golang.org/x/lint/golint
 
 GOCOVMERGE = $(BIN)/gocovmerge
-$(BIN)/gocovmerge: TOOL=github.com/wadey/gocovmerge
+$(BIN)/gocovmerge: PACKAGE=github.com/wadey/gocovmerge
 
 GOCOV = $(BIN)/gocov
-$(BIN)/gocov: TOOL=github.com/axw/gocov/...
+$(BIN)/gocov: PACKAGE=github.com/axw/gocov/...
 
 GOCOVXML = $(BIN)/gocov-xml
-$(BIN)/gocov-xml: TOOL=github.com/AlekSi/gocov-xml
+$(BIN)/gocov-xml: PACKAGE=github.com/AlekSi/gocov-xml
 
 GO2XUNIT = $(BIN)/go2xunit
-$(BIN)/go2xunit: TOOL=github.com/tebeka/go2xunit
+$(BIN)/go2xunit: PACKAGE=github.com/tebeka/go2xunit
 
 # Tests
 
@@ -78,7 +78,7 @@ test-coverage: fmt lint test-coverage-tools ; $(info $(M) running coverage tests
 	$Q for pkg in $(TESTPKGS); do \
 		$(GO) test \
 			-coverpkg=$$($(GO) list -f '{{ join .Deps "\n" }}' $$pkg | \
-					grep '^$(PACKAGE)/' | \
+					grep '^$(MODULE)/' | \
 					tr '\n' ',')$$pkg \
 			-covermode=$(COVERAGE_MODE) \
 			-coverprofile="$(COVERAGE_DIR)/coverage/`echo $$pkg | tr "/" "-"`.cover" $$pkg ;\
