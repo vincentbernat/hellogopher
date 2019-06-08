@@ -11,8 +11,7 @@ environment. This turns this `Makefile` as only a convenience tool.
 ## Dependencies
 
 This example relies on modules to retrieve dependencies. This require
-use of Go 1.11. To update a dependency, just edit `go.mod`. If you
-don't want to set a specific version, use `go get -u
+use of Go 1.11. To update a dependency, use `go get -u
 DEPENDENCY@REVISION`.
 
 For older versions of Go, it's possible to use `vgo` instead:
