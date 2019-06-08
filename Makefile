@@ -93,7 +93,7 @@ lint: | $(GOLINT) ; $(info $(M) running golint…) @ ## Run golint
 
 .PHONY: fmt
 fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
-	$Q $(GO) fmt ./...
+	$Q $(GO) fmt $(PKGS)
 
 # Misc
 
