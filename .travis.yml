@@ -6,5 +6,8 @@ go:
   - 1.x
   - master
 script:
-  - make tests
+  - make test
+  - make test-race
+  - make test-xml
+  - make test-coverage
   - make && ./bin/hellogopher hello
