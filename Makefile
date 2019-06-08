@@ -1,4 +1,4 @@
-PACKAGE  = hellogopher
+PACKAGE  = $(shell env GO111MODULE=on $(GO) list -m)
 DATE    ?= $(shell date +%FT%T%z)
 VERSION ?= $(shell git describe --tags --always --dirty --match=v* 2> /dev/null || \
 			cat $(CURDIR)/.version 2> /dev/null || echo v0)
