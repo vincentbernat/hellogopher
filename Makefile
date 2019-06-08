@@ -27,26 +27,26 @@ all: fmt lint $(BIN) ; $(info $(M) building executable…) @ ## Build program bi
 
 $(BIN):
 	@mkdir -p $@
-$(BIN)/%: | $(BIN) ; $(info $(M) building $(REPOSITORY)…)
+$(BIN)/%: | $(BIN) ; $(info $(M) building $(TOOL)…)
 	$Q tmp=$$(mktemp -d); \
-	   env GO111MODULE=off GOPATH=$$tmp GOBIN=$(BIN) $(GO) get $(REPOSITORY) \
+	   env GO111MODULE=off GOPATH=$$tmp GOBIN=$(BIN) $(GO) get $(TOOL) \
 		|| ret=$$?; \
 	   rm -rf $$tmp ; exit $$ret
 
 GOLINT = $(BIN)/golint
-$(BIN)/golint: REPOSITORY=golang.org/x/lint/golint
+$(BIN)/golint: TOOL=golang.org/x/lint/golint
 
 GOCOVMERGE = $(BIN)/gocovmerge
-$(BIN)/gocovmerge: REPOSITORY=github.com/wadey/gocovmerge
+$(BIN)/gocovmerge: TOOL=github.com/wadey/gocovmerge
 
 GOCOV = $(BIN)/gocov
-$(BIN)/gocov: REPOSITORY=github.com/axw/gocov/...
+$(BIN)/gocov: TOOL=github.com/axw/gocov/...
 
 GOCOVXML = $(BIN)/gocov-xml
-$(BIN)/gocov-xml: REPOSITORY=github.com/AlekSi/gocov-xml
+$(BIN)/gocov-xml: TOOL=github.com/AlekSi/gocov-xml
 
 GO2XUNIT = $(BIN)/go2xunit
-$(BIN)/go2xunit: REPOSITORY=github.com/tebeka/go2xunit
+$(BIN)/go2xunit: TOOL=github.com/tebeka/go2xunit
 
 # Tests
 
