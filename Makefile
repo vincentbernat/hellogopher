@@ -36,9 +36,6 @@ $(BIN)/%: | $(BIN) ; $(info $(M) building $(PACKAGE)…)
 GOLINT = $(BIN)/golint
 $(BIN)/golint: PACKAGE=golang.org/x/lint/golint
 
-GOCOVMERGE = $(BIN)/gocovmerge
-$(BIN)/gocovmerge: PACKAGE=github.com/wadey/gocovmerge
-
 GOCOV = $(BIN)/gocov
 $(BIN)/gocov: PACKAGE=github.com/axw/gocov/...
 
@@ -71,19 +68,16 @@ COVERAGE_PROFILE = $(COVERAGE_DIR)/profile.out
 COVERAGE_XML     = $(COVERAGE_DIR)/coverage.xml
 COVERAGE_HTML    = $(COVERAGE_DIR)/index.html
 .PHONY: test-coverage test-coverage-tools
-test-coverage-tools: | $(GOCOVMERGE) $(GOCOV) $(GOCOVXML)
+test-coverage-tools: | $(GOCOV) $(GOCOVXML)
 test-coverage: COVERAGE_DIR := $(CURDIR)/test/coverage.$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 test-coverage: fmt lint test-coverage-tools ; $(info $(M) running coverage tests…) @ ## Run coverage tests
-	$Q mkdir -p $(COVERAGE_DIR)/coverage
-	$Q for pkg in $(TESTPKGS); do \
-		$(GO) test \
-			-coverpkg=$$($(GO) list -f '{{ join .Deps "\n" }}' $$pkg | \
+	$Q mkdir -p $(COVERAGE_DIR)
+	$Q $(GO) test \
+		-coverpkg=$$($(GO) list -f '{{ join .Deps "\n" }}' $(TESTPKGS) | \
 					grep '^$(MODULE)/' | \
-					tr '\n' ',')$$pkg \
-			-covermode=$(COVERAGE_MODE) \
-			-coverprofile="$(COVERAGE_DIR)/coverage/`echo $$pkg | tr "/" "-"`.cover" $$pkg ;\
-	 done
-	$Q $(GOCOVMERGE) $(COVERAGE_DIR)/coverage/*.cover > $(COVERAGE_PROFILE)
+					tr '\n' ',' | sed 's/,$$//') \
+		-covermode=$(COVERAGE_MODE) \
+		-coverprofile="$(COVERAGE_PROFILE)" $(TESTPKGS)
 	$Q $(GO) tool cover -html=$(COVERAGE_PROFILE) -o $(COVERAGE_HTML)
 	$Q $(GOCOV) convert $(COVERAGE_PROFILE) | $(GOCOVXML) > $(COVERAGE_XML)
 
