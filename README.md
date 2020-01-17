@@ -57,7 +57,8 @@ Files other than `.gitignore` and `Makefile` are just examples.
 ## Misc
 
 If `golint` complains with `go/build: importGo hellogopher/cmd: exit
-status 2`, just delete it from `bin/` and build it again.
+status 2`, just delete it from `bin/` and let the Makefile build it
+again.
 
 ## License
 
