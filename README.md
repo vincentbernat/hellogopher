@@ -60,6 +60,19 @@ If `golint` complains with `go/build: importGo hellogopher/cmd: exit
 status 2`, just delete it from `bin/` and let the Makefile build it
 again.
 
+If you prefer, you can also include this Makefile into another one.
+Rename it to `hellogopher.mk` and put in `Makefile` something like
+this:
+
+    include hellogopher.mk
+    
+    # Your custom settings
+    TIMEOUT=10
+    
+    # Your custom rules
+    doc: ; $(info $(M) build documentation) @ ## Build documentation
+    	$(MAKE) -C doc
+
 ## License
 
 This `Makefile` is published under the CC0 1.0 license. See `LICENSE`
