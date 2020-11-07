@@ -1,0 +1,28 @@
+name: CI
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: 0 7 1 * *
+jobs:
+  build:
+    strategy:
+      matrix:
+        go-version: [1.11.x, 1.12.x, 1.x]
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Regular tests
+        run: make test
+      - name: Race tests
+        run: make test-race
+      - name: Tests with XML output
+        run: make test-xml
+      - name: Tests with coverage
+        run: make test-coverage
+      - name: Build and run
+        run: make && ./bin/hellogopher hello
