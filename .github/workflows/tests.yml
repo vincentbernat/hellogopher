@@ -26,3 +26,9 @@ jobs:
         run: make test-coverage
       - name: Build and run
         run: make && ./bin/hellogopher hello
+      - name: Upload binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: binary
+          path: bin/*
+          if-no-files-found: error
