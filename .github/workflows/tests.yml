@@ -28,7 +28,8 @@ jobs:
         run: make && ./bin/hellogopher hello
       - name: Upload binary
         uses: actions/upload-artifact@v2
+        if: matrix.go-version == '1.x'
         with:
-          name: binary
-          path: bin/*
+          name: binary-${{ matrix.os }}
+          path: bin/hellogopher
           if-no-files-found: error
