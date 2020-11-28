@@ -1,4 +1,4 @@
-# Makefile for Go projects
+# Makefile for Go projects (1.11+)
 
 This is an example of `Makefile` to build a Go project. This is quite
 similar to [Filippo Valsorda's hellogopher](https://github.com/cloudflare/hellogopher).
@@ -10,8 +10,8 @@ environment. This turns this `Makefile` as only a convenience tool.
 
 ## Dependencies
 
-This example relies on modules to retrieve dependencies. This require
-use of Go 1.11. To update a dependency, use `go get
+This example relies on modules to retrieve dependencies. This requires
+use of Go 1.11 or more recent. To update a dependency, use `go get
 DEPENDENCY@REVISION`.
 
 For older versions of Go, it's possible to use `vgo` instead:
