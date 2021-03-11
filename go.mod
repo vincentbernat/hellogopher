@@ -1,5 +1,7 @@
 module hellogopher
 
+go 1.11
+
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
 	github.com/cpuguy83/go-md2man v1.0.10 // indirect
