@@ -1,0 +1,23 @@
+---
+stages:
+  - tests
+
+run tests:
+  stage: tests
+  image: golang:1.17-alpine
+  cache:
+    - key:
+        files:
+          - go.sum
+      paths:
+        - .go-cache/
+        - bin/
+  script:
+    - export GOMODCACHE=$PWD/.go-cache
+    - apk add --no-cache git make gcc musl-dev
+    - go mod download
+    - make test-coverage && mv test/coverage*/coverage.xml .
+    - make test-race
+  artifacts:
+    reports:
+      cobertura: coverage.xml
