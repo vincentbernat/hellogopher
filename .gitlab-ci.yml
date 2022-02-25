@@ -16,8 +16,10 @@ run tests:
     - export GOMODCACHE=$PWD/.go-cache
     - apk add --no-cache git make gcc musl-dev
     - go mod download
-    - make test-coverage && mv test/coverage*/coverage.xml .
+    - make test-xml
+    - make test-coverage && mv test/coverage*/coverage.xml test/.
     - make test-race
   artifacts:
     reports:
-      cobertura: coverage.xml
+      junit: test/tests.xml
+      cobertura: test/coverage.xml
