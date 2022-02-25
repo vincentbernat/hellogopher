@@ -1,12 +1,12 @@
 MODULE   = $(shell env GO111MODULE=on $(GO) list -m)
 DATE    ?= $(shell date +%FT%T%z)
 VERSION ?= $(shell git describe --tags --always --dirty --match=v* 2> /dev/null || \
-			cat $(CURDIR)/.version 2> /dev/null || echo v0)
+			cat .version 2> /dev/null || echo v0)
 PKGS     = $(or $(PKG),$(shell env GO111MODULE=on $(GO) list ./...))
 TESTPKGS = $(shell env GO111MODULE=on $(GO) list -f \
 			'{{ if or .TestGoFiles .XTestGoFiles }}{{ .ImportPath }}{{ end }}' \
 			$(PKGS))
-BIN      = $(CURDIR)/bin
+BIN      = bin
 
 GO      = go
 TIMEOUT = 15
@@ -66,7 +66,7 @@ COVERAGE_XML     = $(COVERAGE_DIR)/coverage.xml
 COVERAGE_HTML    = $(COVERAGE_DIR)/index.html
 .PHONY: test-coverage test-coverage-tools
 test-coverage-tools: | $(GOCOV) $(GOCOVXML)
-test-coverage: COVERAGE_DIR := $(CURDIR)/test/coverage.$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
+test-coverage: COVERAGE_DIR := test/coverage.$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 test-coverage: fmt lint test-coverage-tools ; $(info $(M) running coverage tests…) @ ## Run coverage tests
 	$Q mkdir -p $(COVERAGE_DIR)
 	$Q $(GO) test \
