@@ -28,7 +28,7 @@ all: fmt lint | $(BIN) ; $(info $(M) building executable…) @ ## Build program 
 $(BIN):
 	@mkdir -p $@
 $(BIN)/%: | $(BIN) ; $(info $(M) building $(PACKAGE)…)
-	$Q env GOBIN=$(BIN) $(GO) install $(PACKAGE)@latest
+	$Q env GOBIN=$(abspath $(BIN)) $(GO) install $(PACKAGE)@latest
 
 GOLINT = $(BIN)/golint
 $(BIN)/golint: PACKAGE=golang.org/x/lint/golint
