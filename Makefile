@@ -39,8 +39,8 @@ $(BIN)/gocov: PACKAGE=github.com/axw/gocov/...
 GOCOVXML = $(BIN)/gocov-xml
 $(BIN)/gocov-xml: PACKAGE=github.com/AlekSi/gocov-xml
 
-GO2XUNIT = $(BIN)/go2xunit
-$(BIN)/go2xunit: PACKAGE=github.com/tebeka/go2xunit
+GOJUNITREPORT = $(BIN)/go-junit-report
+$(BIN)/go-junit-report: PACKAGE=github.com/jstemmer/go-junit-report
 
 # Tests
 
@@ -55,10 +55,10 @@ $(TEST_TARGETS): test
 check test tests: fmt lint ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests
 	$Q $(GO) test -timeout $(TIMEOUT)s $(ARGS) $(TESTPKGS)
 
-test-xml: fmt lint | $(GO2XUNIT) ; $(info $(M) running xUnit tests…) @ ## Run tests with xUnit output
+test-xml: fmt lint | $(GOJUNITREPORT) ; $(info $(M) running xUnit tests…) @ ## Run tests with xUnit output
 	$Q mkdir -p test
 	$Q 2>&1 $(GO) test -timeout $(TIMEOUT)s -v $(TESTPKGS) | tee test/tests.output
-	$Q $(GO2XUNIT) -fail -input test/tests.output -output test/tests.xml
+	$Q $(GOJUNITREPORT) -package-name -set-exit-code < test/tests.output > test/tests.xml
 
 COVERAGE_MODE    = atomic
 COVERAGE_PROFILE = $(COVERAGE_DIR)/profile.out
