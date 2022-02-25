@@ -17,8 +17,9 @@ run tests:
     - apk add --no-cache git make gcc musl-dev
     - go mod download
     - make test-xml
-    - make test-coverage && mv test/coverage*/coverage.xml test/.
+    - make test-coverage
     - make test-race
+  coverage: '/Code coverage: [0-9.]+/'
   artifacts:
     reports:
       junit: test/tests.xml

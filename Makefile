@@ -77,6 +77,9 @@ test-coverage: fmt lint test-coverage-tools ; $(info $(M) running coverage tests
 		-coverprofile="$(COVERAGE_PROFILE)" $(TESTPKGS)
 	$Q $(GO) tool cover -html=$(COVERAGE_PROFILE) -o $(COVERAGE_HTML)
 	$Q $(GOCOV) convert $(COVERAGE_PROFILE) | $(GOCOVXML) > $(COVERAGE_XML)
+	$Q cp $(COVERAGE_XML) test/coverage.xml
+	@echo -n "Code coverage: "; \
+		dc -e"$$(sed -En 's/^<coverage line-rate="([0-9.]+)".*/\1/p' test/coverage.xml) 100 * p"
 
 .PHONY: lint
 lint: | $(GOLINT) ; $(info $(M) running golint…) @ ## Run golint
