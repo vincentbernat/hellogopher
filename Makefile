@@ -67,8 +67,7 @@ test-coverage: COVERAGE_DIR := test/coverage.$(shell date -u +"%Y-%m-%dT%H:%M:%S
 test-coverage: fmt lint test-coverage-tools ; $(info $(M) running coverage tests…) @ ## Run coverage tests
 	$Q mkdir -p $(COVERAGE_DIR)
 	$Q $(GO) test \
-		-coverpkg=$(echo $(PKGS) | tr '\n' ',' | sed 's/,$$//') \
-		-covermode=$(COVERAGE_MODE) \
+		-coverpkg=$(shell echo $(PKGS) | tr ' ' ',') \
 		-coverprofile="$(COVERAGE_PROFILE)" $(PKGS)
 	$Q $(GO) tool cover -html=$(COVERAGE_PROFILE) -o $(COVERAGE_HTML)
 	$Q $(GOCOV) convert $(COVERAGE_PROFILE) | $(GOCOVXML) > $(COVERAGE_XML)
