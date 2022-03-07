@@ -57,7 +57,7 @@ test-xml: fmt lint | $(GOJUNITREPORT) ; $(info $(M) running xUnit tests…) @ ##
 	$Q 2>&1 $(GO) test -timeout $(TIMEOUT)s -v $(PKGS) | tee test/tests.output
 	$Q $(GOJUNITREPORT) -package-name -set-exit-code < test/tests.output > test/tests.xml
 
-COVERAGE_MODE    = count
+COVERAGE_MODE    = atomic
 COVERAGE_PROFILE = $(COVERAGE_DIR)/profile.out
 COVERAGE_XML     = $(COVERAGE_DIR)/coverage.xml
 COVERAGE_HTML    = $(COVERAGE_DIR)/index.html
