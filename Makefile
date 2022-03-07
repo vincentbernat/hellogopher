@@ -68,6 +68,7 @@ test-coverage: fmt lint test-coverage-tools ; $(info $(M) running coverage tests
 	$Q mkdir -p $(COVERAGE_DIR)
 	$Q $(GO) test \
 		-coverpkg=$(shell echo $(PKGS) | tr ' ' ',') \
+		-covermode=$(COVERAGE_MODE) \
 		-coverprofile="$(COVERAGE_PROFILE)" $(PKGS)
 	$Q $(GO) tool cover -html=$(COVERAGE_PROFILE) -o $(COVERAGE_HTML)
 	$Q $(GOCOV) convert $(COVERAGE_PROFILE) | $(GOCOVXML) > $(COVERAGE_XML)
