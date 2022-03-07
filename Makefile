@@ -70,9 +70,7 @@ test-coverage: COVERAGE_DIR := test/coverage.$(shell date -u +"%Y-%m-%dT%H:%M:%S
 test-coverage: fmt lint test-coverage-tools ; $(info $(M) running coverage tests…) @ ## Run coverage tests
 	$Q mkdir -p $(COVERAGE_DIR)
 	$Q $(GO) test \
-		-coverpkg=$$($(GO) list -f '{{ join .Deps "\n" }}' $(TESTPKGS) | \
-					grep '^$(MODULE)/' | \
-					tr '\n' ',' | sed 's/,$$//') \
+		-coverpkg=$(echo $(PKGS)$ | tr '\n' ',' | sed 's/,$$//') \
 		-covermode=$(COVERAGE_MODE) \
 		-coverprofile="$(COVERAGE_PROFILE)" $(TESTPKGS)
 	$Q $(GO) tool cover -html=$(COVERAGE_PROFILE) -o $(COVERAGE_HTML)
