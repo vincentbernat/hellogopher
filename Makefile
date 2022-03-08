@@ -13,8 +13,10 @@ M = $(shell printf "\033[34;1m▶\033[0m")
 
 export GO111MODULE=on
 
+GENERATED = # List of generated files
+
 .PHONY: all
-all: fmt lint | $(BIN) ; $(info $(M) building executable…) @ ## Build program binary
+all: fmt lint $(GENERATED) | $(BIN) ; $(info $(M) building executable…) @ ## Build program binary
 	$Q $(GO) build \
 		-tags release \
 		-ldflags '-X $(MODULE)/cmd.Version=$(VERSION) -X $(MODULE)/cmd.BuildDate=$(DATE)' \
@@ -39,6 +41,8 @@ $(BIN)/gocov-xml: PACKAGE=github.com/AlekSi/gocov-xml
 GOTESTSUM = $(BIN)/gotestsum
 $(BIN)/gotestsum: PACKAGE=gotest.tools/gotestsum
 
+# Generate
+
 # Tests
 
 TEST_TARGETS := test-bench test-short test-verbose test-race
@@ -49,13 +53,14 @@ test-verbose: ARGS=-v            ## Run tests in verbose mode with coverage repo
 test-race:    ARGS=-race         ## Run tests with race detector
 $(TEST_TARGETS): NAME=$(MAKECMDGOALS:test-%=%)
 $(TEST_TARGETS): test
-check test tests: fmt lint | $(GOTESTSUM) ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests
+check test tests: fmt lint $(GENERATED) | $(GOTESTSUM) ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests
 	$Q mkdir -p test
 	$Q $(GOTESTSUM) --junitfile test/tests.xml -- -timeout $(TIMEOUT)s $(ARGS) $(PKGS)
 
 COVERAGE_MODE = atomic
 .PHONY: test-coverage
-test-coverage: fmt lint | $(GOCOV) $(GOCOVXML) $(GOTESTSUM) ; $(info $(M) running coverage tests…) @ ## Run coverage tests
+test-coverage: fmt lint $(GENERATED)
+test-coverage: | $(GOCOV) $(GOCOVXML) $(GOTESTSUM) ; $(info $(M) running coverage tests…) @ ## Run coverage tests
 	$Q mkdir -p test
 	$Q $(GOTESTSUM) -- \
 		-coverpkg=$(shell echo $(PKGS) | tr ' ' ',') \
@@ -78,7 +83,7 @@ fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
 
 .PHONY: clean
 clean: ; $(info $(M) cleaning…)	@ ## Cleanup everything
-	@rm -rf $(BIN) test
+	@rm -rf $(BIN) test $(GENERATED)
 
 .PHONY: help
 help:
