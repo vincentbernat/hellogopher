@@ -34,8 +34,8 @@ The following commands are available:
  - `make test` to run tests
  - `make test-verbose` to run tests in verbose mode
  - `make test-race` for race tests
- - `make test-coverage` for test coverage (will output `index.html`,
-   `coverage.xml` and `profile.out` in `test/coverage.*/`.
+ - `make test-coverage` for test coverage (will output `coverage.html`
+   and `coverage.xml` in `test/`.
  - `make test PKG=helloworld/hello` to restrict test to a package
  - `make clean`
  - `make lint` to run golint

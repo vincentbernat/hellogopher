@@ -50,24 +50,19 @@ test-race:    ARGS=-race         ## Run tests with race detector
 $(TEST_TARGETS): NAME=$(MAKECMDGOALS:test-%=%)
 $(TEST_TARGETS): test
 check test tests: fmt lint | $(GOTESTSUM) ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests
-	$Q $(GOTESTSUM) -- -timeout $(TIMEOUT)s $(ARGS) $(PKGS)
+	$Q mkdir -p test
+	$Q $(GOTESTSUM) --junitfile test/tests.xml -- -timeout $(TIMEOUT)s $(ARGS) $(PKGS)
 
-COVERAGE_MODE    = atomic
-COVERAGE_PROFILE = $(COVERAGE_DIR)/profile.out
-COVERAGE_XML     = $(COVERAGE_DIR)/coverage.xml
-COVERAGE_HTML    = $(COVERAGE_DIR)/index.html
-.PHONY: test-coverage test-coverage-tools
-test-coverage-tools: | $(GOCOV) $(GOCOVXML)
-test-coverage: COVERAGE_DIR := test/coverage.$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
-test-coverage: fmt lint test-coverage-tools ; $(info $(M) running coverage tests…) @ ## Run coverage tests
-	$Q mkdir -p $(COVERAGE_DIR)
+COVERAGE_MODE = atomic
+.PHONY: test-coverage
+test-coverage: fmt lint | $(GOCOV) $(GOCOVXML) $(GOTESTSUM) ; $(info $(M) running coverage tests…) @ ## Run coverage tests
+	$Q mkdir -p test
 	$Q $(GOTESTSUM) -- \
 		-coverpkg=$(shell echo $(PKGS) | tr ' ' ',') \
 		-covermode=$(COVERAGE_MODE) \
-		-coverprofile="$(COVERAGE_PROFILE)" $(PKGS)
-	$Q $(GO) tool cover -html=$(COVERAGE_PROFILE) -o $(COVERAGE_HTML)
-	$Q $(GOCOV) convert $(COVERAGE_PROFILE) | $(GOCOVXML) > $(COVERAGE_XML)
-	$Q cp $(COVERAGE_XML) test/coverage.xml
+		-coverprofile=test/profile.out $(PKGS)
+	$Q $(GO) tool cover -html=test/profile.out -o test/coverage.html
+	$Q $(GOCOV) convert test/profile.out | $(GOCOVXML) > test/coverage.xml
 	@echo -n "Code coverage: "; \
 		echo "$$(sed -En 's/^<coverage line-rate="([0-9.]+)".*/\1/p' test/coverage.xml) * 100 / 1" | bc -q
 
@@ -83,8 +78,7 @@ fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
 
 .PHONY: clean
 clean: ; $(info $(M) cleaning…)	@ ## Cleanup everything
-	@rm -rf $(BIN)
-	@rm -rf test/tests.* test/coverage.*
+	@rm -rf $(BIN) test
 
 .PHONY: help
 help:
