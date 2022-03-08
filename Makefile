@@ -36,26 +36,21 @@ $(BIN)/gocov: PACKAGE=github.com/axw/gocov/...
 GOCOVXML = $(BIN)/gocov-xml
 $(BIN)/gocov-xml: PACKAGE=github.com/AlekSi/gocov-xml
 
-GOJUNITREPORT = $(BIN)/go-junit-report
-$(BIN)/go-junit-report: PACKAGE=github.com/jstemmer/go-junit-report
+GOTESTSUM = $(BIN)/gotestsum
+$(BIN)/gotestsum: PACKAGE=gotest.tools/gotestsum
 
 # Tests
 
-TEST_TARGETS := test-default test-bench test-short test-verbose test-race
-.PHONY: $(TEST_TARGETS) test-xml check test tests
+TEST_TARGETS := test-bench test-short test-verbose test-race
+.PHONY: $(TEST_TARGETS) check test tests
 test-bench:   ARGS=-run=__absolutelynothing__ -bench=. ## Run benchmarks
 test-short:   ARGS=-short        ## Run only short tests
 test-verbose: ARGS=-v            ## Run tests in verbose mode with coverage reporting
 test-race:    ARGS=-race         ## Run tests with race detector
 $(TEST_TARGETS): NAME=$(MAKECMDGOALS:test-%=%)
 $(TEST_TARGETS): test
-check test tests: fmt lint ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests
-	$Q $(GO) test -timeout $(TIMEOUT)s $(ARGS) $(PKGS)
-
-test-xml: fmt lint | $(GOJUNITREPORT) ; $(info $(M) running xUnit tests…) @ ## Run tests with xUnit output
-	$Q mkdir -p test
-	$Q 2>&1 $(GO) test -timeout $(TIMEOUT)s -v $(PKGS) | tee test/tests.output
-	$Q $(GOJUNITREPORT) -set-exit-code < test/tests.output > test/tests.xml
+check test tests: fmt lint | $(GOTESTSUM) ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests
+	$Q $(GOTESTSUM) -- -timeout $(TIMEOUT)s $(ARGS) $(PKGS)
 
 COVERAGE_MODE    = atomic
 COVERAGE_PROFILE = $(COVERAGE_DIR)/profile.out
@@ -66,7 +61,7 @@ test-coverage-tools: | $(GOCOV) $(GOCOVXML)
 test-coverage: COVERAGE_DIR := test/coverage.$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 test-coverage: fmt lint test-coverage-tools ; $(info $(M) running coverage tests…) @ ## Run coverage tests
 	$Q mkdir -p $(COVERAGE_DIR)
-	$Q $(GO) test \
+	$Q $(GOTESTSUM) -- \
 		-coverpkg=$(shell echo $(PKGS) | tr ' ' ',') \
 		-covermode=$(COVERAGE_MODE) \
 		-coverprofile="$(COVERAGE_PROFILE)" $(PKGS)

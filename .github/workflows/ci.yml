@@ -16,12 +16,8 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
-      - name: Regular tests
-        run: make test
       - name: Race tests
         run: make test-race
-      - name: Tests with XML output
-        run: make test-xml
       - name: Tests with coverage
         run: make test-coverage
       - name: Build and run

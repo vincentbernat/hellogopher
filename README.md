@@ -34,7 +34,6 @@ The following commands are available:
  - `make test` to run tests
  - `make test-verbose` to run tests in verbose mode
  - `make test-race` for race tests
- - `make test-xml` for tests with xUnit-compatible output
  - `make test-coverage` for test coverage (will output `index.html`,
    `coverage.xml` and `profile.out` in `test/coverage.*/`.
  - `make test PKG=helloworld/hello` to restrict test to a package

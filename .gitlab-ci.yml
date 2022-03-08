@@ -16,9 +16,7 @@ run tests:
     - export GOMODCACHE=$PWD/.go-cache
     - apk add --no-cache git make gcc musl-dev
     - go mod download
-    - make test
     - make test-race
-    - make test-xml
     - make test-coverage
   coverage: '/Code coverage: [0-9.]+/'
   artifacts:
