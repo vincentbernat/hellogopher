@@ -69,7 +69,7 @@ test-coverage: | $(GOCOV) $(GOCOVXML) $(GOTESTSUM) ; $(info $(M) running coverag
 	$Q $(GO) tool cover -html=test/profile.out -o test/coverage.html
 	$Q $(GOCOV) convert test/profile.out | $(GOCOVXML) > test/coverage.xml
 	@echo -n "Code coverage: "; \
-		echo "$$(sed -En 's/^<coverage line-rate="([0-9.]+)".*/\1/p' test/coverage.xml) * 100 / 1" | bc -q
+		echo "scale=1;$$(sed -En 's/^<coverage line-rate="([0-9.]+)".*/\1/p' test/coverage.xml) * 100 / 1" | bc -q
 
 .PHONY: lint
 lint: | $(REVIVE) ; $(info $(M) running golint…) @ ## Run golint
