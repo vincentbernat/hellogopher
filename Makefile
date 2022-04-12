@@ -29,6 +29,9 @@ $(BIN):
 $(BIN)/%: | $(BIN) ; $(info $(M) building $(PACKAGE)…)
 	$Q env GOBIN=$(abspath $(BIN)) $(GO) install $(PACKAGE)@latest
 
+GOIMPORTS = $(BIN)/goimports
+$(BIN)/goimports: PACKAGE=golang.org/x/tools/cmd/goimports
+
 REVIVE = $(BIN)/revive
 $(BIN)/revive: PACKAGE=github.com/mgechev/revive
 
@@ -76,8 +79,8 @@ lint: | $(REVIVE) ; $(info $(M) running golint…) @ ## Run golint
 	$Q $(REVIVE) -formatter friendly -set_exit_status ./...
 
 .PHONY: fmt
-fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
-	$Q $(GO) fmt $(PKGS)
+fmt: | $(GOIMPORTS) ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
+	$Q $(GOIMPORTS) -local $(MODULE) -w $(shell $(GO) list -f '{{$$d := .Dir}}{{range $$f := .GoFiles}}{{printf "%s/%s\n" $$d $$f}}{{end}}{{range $$f := .CgoFiles}}{{printf "%s/%s\n" $$d $$f}}{{end}}{{range $$f := .TestGoFiles}}{{printf "%s/%s\n" $$d $$f}}{{end}}' $(PKGS))
 
 # Misc
 
