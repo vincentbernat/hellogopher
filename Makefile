@@ -27,22 +27,22 @@ all: fmt lint $(GENERATED) | $(BIN) ; $(info $(M) building executable…) @ ## B
 $(BIN):
 	@mkdir -p $@
 $(BIN)/%: | $(BIN) ; $(info $(M) building $(PACKAGE)…)
-	$Q env GOBIN=$(abspath $(BIN)) $(GO) install $(PACKAGE)@latest
+	$Q env GOBIN=$(abspath $(BIN)) $(GO) install $(PACKAGE)
 
 GOIMPORTS = $(BIN)/goimports
-$(BIN)/goimports: PACKAGE=golang.org/x/tools/cmd/goimports
+$(BIN)/goimports: PACKAGE=golang.org/x/tools/cmd/goimports@latest
 
 REVIVE = $(BIN)/revive
-$(BIN)/revive: PACKAGE=github.com/mgechev/revive
+$(BIN)/revive: PACKAGE=github.com/mgechev/revive@latest
 
 GOCOV = $(BIN)/gocov
-$(BIN)/gocov: PACKAGE=github.com/axw/gocov/...
+$(BIN)/gocov: PACKAGE=github.com/axw/gocov/gocov@latest
 
 GOCOVXML = $(BIN)/gocov-xml
-$(BIN)/gocov-xml: PACKAGE=github.com/AlekSi/gocov-xml
+$(BIN)/gocov-xml: PACKAGE=github.com/AlekSi/gocov-xml@latest
 
 GOTESTSUM = $(BIN)/gotestsum
-$(BIN)/gotestsum: PACKAGE=gotest.tools/gotestsum
+$(BIN)/gotestsum: PACKAGE=gotest.tools/gotestsum@latest
 
 # Generate
 
