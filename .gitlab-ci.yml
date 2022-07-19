@@ -12,7 +12,6 @@ run tests:
         prefix: $CI_JOB_IMAGE
       paths:
         - .go-cache/
-        - bin/
   script:
     - export GOMODCACHE=$PWD/.go-cache
     - apk add --no-cache git make gcc musl-dev
