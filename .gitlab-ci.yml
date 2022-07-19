@@ -9,6 +9,7 @@ run tests:
     - key:
         files:
           - go.sum
+        prefix: $CI_JOB_IMAGE
       paths:
         - .go-cache/
         - bin/
