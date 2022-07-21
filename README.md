@@ -17,7 +17,7 @@ DEPENDENCY@REVISION`.
 We also rely on `go install TOOL@latest` which requires Go 1.16. You
 can checkout tag [v0.6][] if you need compatibility up to Go 1.11.
 
-[v0.6](https://github.com/vincentbernat/hellogopher/tree/v0.6)
+[v0.6]: https://github.com/vincentbernat/hellogopher/tree/v0.6
 
 On first build, you need to run `go mod init PROJECTNAME`.
 
