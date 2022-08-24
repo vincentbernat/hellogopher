@@ -17,10 +17,8 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
           cache: true
-      - name: Race tests
-        run: make test-race
-      - name: Tests with coverage
-        run: make test-coverage
+      - name: Run tests
+        run: make test-race test-coverage test-bench
       - name: Build and run
         run: make && ./bin/hellogopher hello
       - name: Upload binary

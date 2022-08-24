@@ -47,9 +47,8 @@ $(BIN)/gotestsum: PACKAGE=gotest.tools/gotestsum@latest
 
 # Tests
 
-TEST_TARGETS := test-bench test-short test-verbose test-race
+TEST_TARGETS := test-short test-verbose test-race
 .PHONY: $(TEST_TARGETS) check test tests
-test-bench:   ARGS=-run=__absolutelynothing__ -bench=. ## Run benchmarks
 test-short:   ARGS=-short        ## Run only short tests
 test-verbose: ARGS=-v            ## Run tests in verbose mode with coverage reporting
 test-race:    ARGS=-race         ## Run tests with race detector
@@ -58,6 +57,9 @@ $(TEST_TARGETS): test
 check test tests: fmt lint $(GENERATED) | $(GOTESTSUM) ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests
 	$Q mkdir -p test
 	$Q $(GOTESTSUM) --junitfile test/tests.xml -- -timeout $(TIMEOUT)s $(ARGS) $(PKGS)
+.PHONY: test-bench
+test-bench: $(GENERATED) ; $(info $(M) running benchmarks…) @ ## Run benchmarks
+	$Q $(GOTESTSUM) -f standard-quiet -- --timeout $(TIMEOUT)s -run=__absolutelynothing__ -bench=. $(PKGS)
 
 COVERAGE_MODE = atomic
 .PHONY: test-coverage

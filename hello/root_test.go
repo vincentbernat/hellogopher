@@ -14,3 +14,10 @@ func TestHello(t *testing.T) {
 			got.String(), expected)
 	}
 }
+
+func BenchmarkHello(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		got := &bytes.Buffer{}
+		Hello(got)
+	}
+}
