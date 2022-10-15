@@ -47,10 +47,9 @@ $(BIN)/gotestsum: PACKAGE=gotest.tools/gotestsum@latest
 
 # Tests
 
-TEST_TARGETS := test-short test-verbose test-race
+TEST_TARGETS := test-short test-race
 .PHONY: $(TEST_TARGETS) check test tests
 test-short:   ARGS=-short        ## Run only short tests
-test-verbose: ARGS=-v            ## Run tests in verbose mode with coverage reporting
 test-race:    ARGS=-race         ## Run tests with race detector
 $(TEST_TARGETS): NAME=$(MAKECMDGOALS:test-%=%)
 $(TEST_TARGETS): test
