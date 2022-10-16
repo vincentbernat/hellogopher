@@ -8,6 +8,11 @@ don't want to use it (like me). However, starting with Go 1.11,
 modules enable to work outside of `GOPATH` without any special
 environment. This turns this `Makefile` as only a convenience tool.
 
+This `Makefile` may not be used as is. It is expected to be modified
+to fit your needs. See [Akvorado's
+Makefile](https://github.com/akvorado/akvorado/blob/main/Makefile) for
+an example on a more complex project.
+
 ## Dependencies
 
 This example relies on modules to retrieve dependencies. This requires
