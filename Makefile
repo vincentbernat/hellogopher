@@ -32,7 +32,7 @@ GOIMPORTS = $(BIN)/goimports
 $(BIN)/goimports: PACKAGE=golang.org/x/tools/cmd/goimports@latest
 
 REVIVE = $(BIN)/revive
-$(BIN)/revive: PACKAGE=github.com/mgechev/revive@latest
+$(BIN)/revive: PACKAGE=github.com/mgechev/revive@v1.2.4
 
 GOCOV = $(BIN)/gocov
 $(BIN)/gocov: PACKAGE=github.com/axw/gocov/gocov@latest
