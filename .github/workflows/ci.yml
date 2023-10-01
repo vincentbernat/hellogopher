@@ -12,8 +12,12 @@ jobs:
   build:
     strategy:
       matrix:
-        go-version: [1.16.x, 1.x]
-        os: [ubuntu-latest, macos-latest]
+        go-version:
+          - oldstable
+          - stable
+        os:
+          - ubuntu-latest
+          - macos-latest
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -27,7 +31,7 @@ jobs:
         run: make && ./bin/hellogopher hello
       - name: Upload binary
         uses: actions/upload-artifact@v3
-        if: matrix.go-version == '1.x'
+        if: matrix.go-version == 'stable'
         with:
           name: binary-${{ matrix.os }}
           path: bin/hellogopher
