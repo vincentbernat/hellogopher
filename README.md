@@ -24,6 +24,9 @@ can checkout tag [v0.6][] if you need compatibility up to Go 1.11.
 
 [v0.6]: https://github.com/vincentbernat/hellogopher/tree/v0.6
 
+Some tools now require more recent versions of Go (1.18+), but it would be
+possible to pin them to older versions.
+
 On first build, you need to run `go mod init PROJECTNAME`.
 
 ## Versioning
