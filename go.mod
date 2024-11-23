@@ -2,8 +2,6 @@ module hellogopher
 
 go 1.22.1
 
-toolchain go1.23.3
-
 require (
 	github.com/AlekSi/gocov-xml v1.1.0
 	github.com/axw/gocov v1.2.1
