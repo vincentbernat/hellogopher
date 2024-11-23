@@ -25,23 +25,16 @@ all: fmt lint $(GENERATED) | $(BIN) ; $(info $(M) building executable…) @ ## B
 
 $(BIN):
 	@mkdir -p $@
-$(BIN)/%: | $(BIN) ; $(info $(M) building $(PACKAGE)…)
+$(BIN)/%: PACKAGE=$(shell $(GO) list -e -f '{{ range .Imports }}{{ printf "%s\n" . }}{{ end }}' tools.go | grep "/$*$$")
+$(BIN)/%: go.mod go.sum | $(BIN) ; $(info $(M) building tool $*…)
+	@[ -n "$(PACKAGE)" ] || (>&2 echo "*** Unknown tool $*!"; false)
 	$Q env GOBIN=$(abspath $(BIN)) $(GO) install $(PACKAGE)
 
 GOIMPORTS = $(BIN)/goimports
-$(BIN)/goimports: PACKAGE=golang.org/x/tools/cmd/goimports@latest
-
 REVIVE = $(BIN)/revive
-$(BIN)/revive: PACKAGE=github.com/mgechev/revive@v1.2.4
-
 GOCOV = $(BIN)/gocov
-$(BIN)/gocov: PACKAGE=github.com/axw/gocov/gocov@latest
-
 GOCOVXML = $(BIN)/gocov-xml
-$(BIN)/gocov-xml: PACKAGE=github.com/AlekSi/gocov-xml@latest
-
 GOTESTSUM = $(BIN)/gotestsum
-$(BIN)/gotestsum: PACKAGE=gotest.tools/gotestsum@latest
 
 # Generate
 
