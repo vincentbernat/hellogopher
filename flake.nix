@@ -13,7 +13,7 @@
         packages.default = pkgs.buildGoModule {
           name = "hellogopher";
           src = ./.;
-          vendorSha256 = "sha256-OTsiyR+BUvK1393KhiTmoLkVhMzmGgLxEfShFcdqVCs=";
+          vendorHash = "sha256-vttI+PEmx72vqWeSQo+V2J5hPsZoLu5GksJI3m02Mgg=";
           tags = ["release"];
         };
       });
