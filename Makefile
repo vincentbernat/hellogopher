@@ -25,16 +25,12 @@ all: fmt lint $(GENERATED) | $(BIN) ; $(info $(M) building executable…) @ ## B
 
 $(BIN):
 	@mkdir -p $@
-$(BIN)/%: PACKAGE=$(shell $(GO) list -e -f '{{ range .Imports }}{{ printf "%s\n" . }}{{ end }}' tools.go | grep "/$*$$")
-$(BIN)/%: go.mod go.sum | $(BIN) ; $(info $(M) building tool $*…)
-	@[ -n "$(PACKAGE)" ] || (>&2 echo "*** Unknown tool $*!"; false)
-	$Q env GOBIN=$(abspath $(BIN)) $(GO) install $(PACKAGE)
 
-GOIMPORTS = $(BIN)/goimports
-REVIVE = $(BIN)/revive
-GOCOV = $(BIN)/gocov
-GOCOVXML = $(BIN)/gocov-xml
-GOTESTSUM = $(BIN)/gotestsum
+GOIMPORTS = go tool goimports
+REVIVE = go tool revive
+GOCOV = go tool gocov
+GOCOVXML = go tool gocov-xml
+GOTESTSUM = go tool gotestsum
 
 # Generate
 
@@ -46,7 +42,7 @@ test-short:   ARGS=-short        ## Run only short tests
 test-race:    ARGS=-race         ## Run tests with race detector
 $(TEST_TARGETS): NAME=$(MAKECMDGOALS:test-%=%)
 $(TEST_TARGETS): test
-check test tests: fmt lint $(GENERATED) | $(GOTESTSUM) ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests
+check test tests: fmt lint $(GENERATED) ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests
 	$Q mkdir -p test
 	$Q $(GOTESTSUM) --junitfile test/tests.xml -- -timeout $(TIMEOUT)s $(ARGS) $(PKGS)
 .PHONY: test-bench
@@ -56,7 +52,7 @@ test-bench: $(GENERATED) ; $(info $(M) running benchmarks…) @ ## Run benchmark
 COVERAGE_MODE = atomic
 .PHONY: test-coverage
 test-coverage: fmt lint $(GENERATED)
-test-coverage: | $(GOCOV) $(GOCOVXML) $(GOTESTSUM) ; $(info $(M) running coverage tests…) @ ## Run coverage tests
+test-coverage: ; $(info $(M) running coverage tests…) @ ## Run coverage tests
 	$Q mkdir -p test
 	$Q $(GOTESTSUM) -- \
 		-coverpkg=$(shell echo $(PKGS) | tr ' ' ',') \
@@ -68,11 +64,11 @@ test-coverage: | $(GOCOV) $(GOCOVXML) $(GOTESTSUM) ; $(info $(M) running coverag
 		echo "scale=1;$$(sed -En 's/^<coverage line-rate="([0-9.]+)".*/\1/p' test/coverage.xml) * 100 / 1" | bc -q
 
 .PHONY: lint
-lint: | $(REVIVE) ; $(info $(M) running golint…) @ ## Run golint
+lint: ; $(info $(M) running golint…) @ ## Run golint
 	$Q $(REVIVE) -formatter friendly -set_exit_status ./...
 
 .PHONY: fmt
-fmt: | $(GOIMPORTS) ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
+fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
 	$Q $(GOIMPORTS) -local $(MODULE) -w $(shell $(GO) list -f '{{$$d := .Dir}}{{range $$f := .GoFiles}}{{printf "%s/%s\n" $$d $$f}}{{end}}{{range $$f := .CgoFiles}}{{printf "%s/%s\n" $$d $$f}}{{end}}{{range $$f := .TestGoFiles}}{{printf "%s/%s\n" $$d $$f}}{{end}}' $(PKGS))
 
 # Misc

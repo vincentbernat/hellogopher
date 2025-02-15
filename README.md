@@ -1,4 +1,4 @@
-# Makefile for Go projects (1.16+)
+# Makefile for Go projects (1.24+)
 
 This is an example of `Makefile` to build a Go project. This is quite
 similar to [Filippo Valsorda's hellogopher](https://github.com/cloudflare/hellogopher).
@@ -19,10 +19,11 @@ This example relies on modules to retrieve dependencies. This requires
 use of Go 1.11 or more recent. To update a dependency, use `go get
 DEPENDENCY@REVISION`.
 
-We also rely on `go install TOOL@latest` which requires Go 1.16. You
-can checkout tag [v0.6][] if you need compatibility up to Go 1.11.
+You can checkout tag [v0.6][] if you need compatibility down to Go 1.11 or tag
+[v1.4][] if you need compatibility down to Go 1.16.
 
 [v0.6]: https://github.com/vincentbernat/hellogopher/tree/v0.6
+[v1.4]: https://github.com/vincentbernat/hellogopher/tree/v1.4
 
 Some tools now require more recent versions of Go (1.22+), but it would be
 possible to pin them to older versions.
