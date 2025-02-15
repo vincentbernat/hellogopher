@@ -57,15 +57,11 @@ Be sure to browse the remaining of the `Makefile` to understand what
 it does. There are some tools that will be downloaded. You can use
 already-installed one by specifying their full path this way instead:
 
-    make lint GOLINT=/usr/bin/golint
+    make lint REVIVE=/usr/bin/revive
 
 Files other than `.gitignore` and `Makefile` are just examples.
 
 ## Misc
-
-If `golint` complains with `go/build: importGo hellogopher/cmd: exit
-status 2`, just delete it from `bin/` and let the Makefile build it
-again.
 
 If you prefer, you can also include this Makefile into another one.
 Rename it to `hellogopher.mk` and put in `Makefile` something like
