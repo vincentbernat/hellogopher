@@ -15,6 +15,7 @@
           src = ./.;
           vendorHash = "sha256-vttI+PEmx72vqWeSQo+V2J5hPsZoLu5GksJI3m02Mgg=";
           tags = ["release"];
+          env.CGO_ENABLED = "0";
         };
       });
 }
