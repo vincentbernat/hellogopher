@@ -15,9 +15,9 @@ an example on a more complex project.
 
 ## Dependencies
 
-This example relies on modules to retrieve dependencies. This requires
-use of Go 1.11 or more recent. To update a dependency, use `go get
-DEPENDENCY@REVISION`.
+This example relies on modules to retrieve dependencies. This requires use of Go
+1.11 or more recent. To update a dependency, use `go get DEPENDENCY@REVISION` or
+`go get -tool DEPENDENCY@REVISION` if this is a tool.
 
 You can checkout tag [v0.6][] if you need compatibility down to Go 1.11 or tag
 [v1.4][] if you need compatibility down to Go 1.16.
