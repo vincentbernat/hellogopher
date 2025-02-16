@@ -16,7 +16,7 @@ an example on a more complex project.
 ## Dependencies
 
 This example relies on modules to retrieve dependencies. This requires use of Go
-1.11 or more recent. To update a dependency, use `go get DEPENDENCY@REVISION` or
+1.24 or more recent. To update a dependency, use `go get DEPENDENCY@REVISION` or
 `go get -tool DEPENDENCY@REVISION` if this is a tool.
 
 You can checkout tag [v0.6][] if you need compatibility down to Go 1.11 or tag
@@ -50,12 +50,8 @@ The following commands are available:
  - `make lint` to run golint
  - `make fmt` to run gofmt
 
-The very first line of the `Makefile` is the most important one: this is the
-path of the package. I don't use a `go get`able package path for applications
-but you can.
-
-Be sure to browse the remaining of the `Makefile` to understand what it does.
-Files other than `.gitignore` and `Makefile` are just examples.
+Be sure to browse the `Makefile` to understand what it does. Files other than
+`.gitignore` and `Makefile` are just examples.
 
 ## Misc
 
