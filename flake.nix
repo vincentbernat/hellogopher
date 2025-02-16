@@ -10,6 +10,7 @@
         pkgs = nixpkgs.legacyPackages."${system}";
       in
       {
+        # This does not use the Makefile, notably "version" subcommand won't work.
         packages.default = pkgs.buildGo124Module {
           name = "hellogopher";
           src = ./.;
