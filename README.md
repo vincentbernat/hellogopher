@@ -50,16 +50,11 @@ The following commands are available:
  - `make lint` to run golint
  - `make fmt` to run gofmt
 
-The very first line of the `Makefile` is the most important one: this
-is the path of the package. I don't use a `go get`able package path
+The very first line of the `Makefile` is the most important one: this is the
+path of the package. I don't use a `go get`able package path for applications
 but you can.
 
-Be sure to browse the remaining of the `Makefile` to understand what
-it does. There are some tools that will be downloaded. You can use
-already-installed one by specifying their full path this way instead:
-
-    make lint REVIVE=/usr/bin/revive
-
+Be sure to browse the remaining of the `Makefile` to understand what it does.
 Files other than `.gitignore` and `Makefile` are just examples.
 
 ## Misc
