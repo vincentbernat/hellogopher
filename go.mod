@@ -2,14 +2,13 @@ module hellogopher
 
 go 1.24.0
 
-require github.com/spf13/cobra v1.8.1
+require github.com/spf13/cobra v1.9.1
 
 require (
 	github.com/AlekSi/gocov-xml v1.1.0 // indirect
 	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/axw/gocov v1.2.1 // indirect
 	github.com/bitfield/gotestdox v0.2.2 // indirect
-	github.com/bmatcuk/doublestar/v4 v4.8.1 // indirect
 	github.com/chavacava/garif v0.1.0 // indirect
 	github.com/dnephin/pflag v1.0.7 // indirect
 	github.com/fatih/color v1.18.0 // indirect
@@ -26,7 +25,7 @@ require (
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/spf13/afero v1.12.0 // indirect
-	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/spf13/pflag v1.0.6 // indirect
 	golang.org/x/mod v0.23.0 // indirect
 	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
