@@ -1,5 +1,4 @@
 MODULE   = $(shell $(GO) list -m)
-DATE    ?= $(shell date +%FT%T%z)
 VERSION ?= $(shell git describe --tags --always --dirty --match=v* 2> /dev/null || \
 			cat .version 2> /dev/null || echo v0)
 PKGS     = $(or $(PKG),$(shell $(GO) list ./...))
@@ -18,7 +17,7 @@ GENERATED = # List of generated files
 all: fmt lint $(GENERATED) | $(BIN) ; $(info $(M) building executable…) @ ## Build program binary
 	$Q $(GO) build \
 		-tags release \
-		-ldflags '-X $(MODULE)/cmd.Version=$(VERSION) -X $(MODULE)/cmd.BuildDate=$(DATE)' \
+		-ldflags '-X $(MODULE)/cmd.Version=$(VERSION)' \
 		-o $(BIN)/$(basename $(MODULE)) main.go
 
 $(BIN):

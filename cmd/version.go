@@ -10,8 +10,6 @@ import (
 var (
 	// Version contains the current version.
 	Version = "dev"
-	// BuildDate contains a string with the build date.
-	BuildDate = "unknown"
 )
 
 func init() {
@@ -24,7 +22,6 @@ var versionCmd = &cobra.Command{
 	Long:  `Display version and build information about hellogopher.`,
 	Run: func(*cobra.Command, []string) {
 		fmt.Printf("hellogopher %s\n", Version)
-		fmt.Printf("  Build date: %s\n", BuildDate)
 		fmt.Printf("  Built with: %s\n", runtime.Version())
 	},
 }
