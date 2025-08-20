@@ -51,8 +51,8 @@ test-coverage: ; $(info $(M) running coverage tests…) @ ## Run coverage tests
 		-coverprofile=test/profile.out $(PKGS)
 	$Q $(GO) tool cover -html=test/profile.out -o test/coverage.html
 	$Q $(GO) tool gocover-cobertura < test/profile.out > test/coverage.xml # Inaccurate?
-	@echo -n "Code coverage: "; \
-		echo "scale=1;$$(sed -En 's/^<coverage line-rate="([0-9.]+)".*/\1/p' test/coverage.xml) * 100 / 1" | bc -q
+	@printf "Code coverage: "; \
+		go tool cover -func test/profile.out | awk '($$1 == "total:") { print $$NF}'
 
 .PHONY: lint
 lint: ; $(info $(M) running golint…) @ ## Run golint
