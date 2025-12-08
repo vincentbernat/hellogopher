@@ -2,7 +2,7 @@ module hellogopher
 
 go 1.24.0
 
-require github.com/spf13/cobra v1.10.1
+require github.com/spf13/cobra v1.10.2
 
 require (
 	github.com/BurntSushi/toml v1.4.0 // indirect
