@@ -31,7 +31,7 @@ jobs:
       - name: Build and run
         run: make && ./bin/hellogopher hello
       - name: Upload binary
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: matrix.go-version == 'stable'
         with:
           name: binary-${{ matrix.os }}
