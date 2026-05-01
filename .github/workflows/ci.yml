@@ -14,7 +14,7 @@ jobs:
       matrix:
         go-version:
           - 1.24
-          # - oldstable
+          - oldstable
           - stable
         os:
           - ubuntu-latest
