@@ -8,7 +8,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages."${system}";
-        go = pkgs.go_1_24;
+        go = pkgs.go_1_26;
       in
       {
         # We cannot get the version with Nix in pure mode. The build process
@@ -17,7 +17,7 @@
         packages.default = pkgs.buildGoModule.override { inherit go; } {
           name = "hellogopher";
           src = ./.;
-          vendorHash = "sha256-Z3DQZ6bleZ3hs0r+WtvgZuFuqGsOJrjnZXRz1Wbyh8o=";
+          vendorHash = "sha256-jWTn1tOpOhLgKuhTWM9Ifq+k4fJGJREn2KIbJRqmQc8=";
           buildPhase = ''
             make all
           '';
