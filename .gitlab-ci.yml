@@ -4,7 +4,7 @@ stages:
 
 run tests:
   stage: tests
-  image: golang:1.17-alpine
+  image: golang:1.24-alpine
   cache:
     - key:
         files:
@@ -21,4 +21,6 @@ run tests:
   artifacts:
     reports:
       junit: test/tests.xml
-      cobertura: test/coverage.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: test/coverage.xml
