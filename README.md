@@ -41,7 +41,6 @@ The following commands are available:
  - `make help` to get help
  - `make` to build the binary (in `bin/`)
  - `make test` to run tests
- - `make test-verbose` to run tests in verbose mode
  - `make test-race` for race tests
  - `make test-coverage` for test coverage (will output `coverage.html`
    and `coverage.xml` in `test/`.
