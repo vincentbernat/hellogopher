@@ -38,7 +38,9 @@ check test tests: fmt lint $(GENERATED) ; $(info $(M) running $(NAME:%=% )testsâ
 	$Q $(GO) tool gotestsum --junitfile test/tests.xml -- -timeout $(TIMEOUT)s $(ARGS) $(PKGS)
 .PHONY: test-bench
 test-bench: $(GENERATED) ; $(info $(M) running benchmarksâ€¦) @ ## Run benchmarks
-	$Q $(GO) tool gotestsum -f standard-quiet -- --timeout $(TIMEOUT)s -run=__absolutelynothing__ -bench=. $(PKGS)
+	$Q $(GO) test \
+		-fullpath -run=__absolutelynothing__ -bench=. \
+		$(ARGS) $(PKGS)
 
 COVERAGE_MODE = atomic
 .PHONY: test-coverage
